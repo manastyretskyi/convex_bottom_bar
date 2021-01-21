@@ -142,6 +142,8 @@ class ConvexAppBar extends StatefulWidget {
   /// The curve to use in the forward direction. Only works when tab style is not fixed.
   final Curve curve;
 
+  final NotchedShape shape;
+
   /// Construct a new appbar with internal style.
   ///
   /// ```dart
@@ -202,6 +204,7 @@ class ConvexAppBar extends StatefulWidget {
     TabStyle style = TabStyle.reactCircle,
     Curve curve = Curves.easeInOut,
     ChipBuilder chipBuilder,
+    NotchedShape shape,
   }) : this.builder(
           key: key,
           itemBuilder: supportedStyle(
@@ -226,6 +229,7 @@ class ConvexAppBar extends StatefulWidget {
           cornerRadius: cornerRadius,
           curve: curve ?? Curves.easeInOut,
           chipBuilder: chipBuilder,
+          shape: shape,
         );
 
   /// Define a custom tab style by implement a [DelegateBuilder].
@@ -260,6 +264,7 @@ class ConvexAppBar extends StatefulWidget {
     this.cornerRadius,
     this.curve = Curves.easeInOut,
     this.chipBuilder,
+    this.shape,
   })  : assert(top == null || top <= 0, 'top should be negative'),
         assert(itemBuilder != null, 'provide custom builder'),
         assert(initialActiveIndex == null || initialActiveIndex < count,
@@ -541,6 +546,7 @@ class ConvexAppBarState extends State<ConvexAppBar>
               leftPercent: percent,
               textDirection: textDirection,
               cornerRadius: widget.cornerRadius,
+              shape: widget.shape,
             ),
           ),
         ),
