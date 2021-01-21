@@ -24,7 +24,7 @@ import 'reused_gradient.dart';
 class ConvexPainter extends CustomPainter {
   final _paint = Paint();
   final _shadowPaint = Paint();
-  late ConvexNotchedRectangle _shape;
+  late NotchedShape _shape;
   final ReusedGradient _gradient = ReusedGradient();
 
   /// Width of the convex shape.
@@ -54,13 +54,14 @@ class ConvexPainter extends CustomPainter {
     double sigma = 2,
     Gradient? gradient,
     double? cornerRadius,
+    NotchedShape? shape,
   }) : super(repaint: leftPercent) {
     _paint..color = color;
     _shadowPaint
       ..color = shadowColor
       ..maskFilter = MaskFilter.blur(BlurStyle.outer, sigma);
     _gradient.gradient = gradient;
-    _shape = ConvexNotchedRectangle(radius: cornerRadius ?? 0);
+    _shape = shape ?? ConvexNotchedRectangle(radius: cornerRadius ?? 0);
   }
 
   @override
