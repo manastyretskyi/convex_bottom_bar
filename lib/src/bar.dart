@@ -144,6 +144,8 @@ class ConvexAppBar extends StatefulWidget {
 
   final NotchedShape? shape;
 
+  final double widthFactor;
+
   /// Construct a new appbar with internal style.
   ///
   /// ```dart
@@ -265,6 +267,7 @@ class ConvexAppBar extends StatefulWidget {
     this.curve = Curves.easeInOut,
     this.chipBuilder,
     this.shape,
+    this.widthFactor,
   })  : assert(top == null || top <= 0, 'top should be negative'),
         assert(initialActiveIndex == null || initialActiveIndex < count,
             'initial index should < $count'),
@@ -516,7 +519,6 @@ class ConvexAppBarState extends State<ConvexAppBar>
     var percent = isFixed()
         ? const AlwaysStoppedAnimation<double>(0.5)
         : _animation ?? _updateAnimation();
-    var factor = 1 / widget.count;
     var textDirection = Directionality.of(context);
     var dx = convexIndex! / (widget.count - 1);
     if (textDirection == TextDirection.rtl) {
@@ -551,7 +553,7 @@ class ConvexAppBarState extends State<ConvexAppBar>
           top: widget.top ?? CURVE_TOP,
           bottom: additionalBottomPadding,
           child: FractionallySizedBox(
-              widthFactor: factor,
+              widthFactor: widget.widthFactor ?? 1 / widget.count,
               alignment: offset,
               child: GestureDetector(
                 child: _newTab(convexIndex, active),
