@@ -144,7 +144,7 @@ class ConvexAppBar extends StatefulWidget {
 
   final NotchedShape? shape;
 
-  final double convexRadius;
+  final double? convexRadius;
 
   /// Construct a new appbar with internal style.
   ///
@@ -510,7 +510,7 @@ class ConvexAppBarState extends State<ConvexAppBar>
   Widget build(BuildContext context) {
     // take care of iPhoneX' safe area at bottom edge
     final additionalBottomPadding =
-        math.max(MediaQuery.of(context).padding.bottom, 10.0);
+        math.max(MediaQuery.of(context).padding.bottom, 0.0);
     final convexIndex = isFixed() ? (widget.count ~/ 2) : _currentIndex;
     final active = isFixed() ? convexIndex == _currentIndex : true;
 
