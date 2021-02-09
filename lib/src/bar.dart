@@ -144,7 +144,7 @@ class ConvexAppBar extends StatefulWidget {
 
   final NotchedShape? shape;
 
-  final double widthFactor;
+  final double convexRadius;
 
   /// Construct a new appbar with internal style.
   ///
@@ -267,7 +267,7 @@ class ConvexAppBar extends StatefulWidget {
     this.curve = Curves.easeInOut,
     this.chipBuilder,
     this.shape,
-    this.widthFactor,
+    this.convexRadius,
   })  : assert(top == null || top <= 0, 'top should be negative'),
         assert(initialActiveIndex == null || initialActiveIndex < count,
             'initial index should < $count'),
@@ -525,7 +525,6 @@ class ConvexAppBarState extends State<ConvexAppBar>
       dx = 1 - dx;
     }
 
-    var offset = FractionalOffset(widget.count > 1 ? dx : 0.0, 0);
     return extend.Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.bottomCenter,
@@ -552,12 +551,15 @@ class ConvexAppBarState extends State<ConvexAppBar>
         Positioned.fill(
           top: widget.top ?? CURVE_TOP,
           bottom: additionalBottomPadding,
-          child: FractionallySizedBox(
-              widthFactor: widget.widthFactor ?? 1 / widget.count,
-              alignment: offset,
-              child: GestureDetector(
-                child: _newTab(convexIndex, active),
-                onTap: () => _onTabClick(convexIndex),
+          child: Align(
+              alignment: Alignment(0, 0),
+              child: SizedBox(
+                width: widget.convexRadius,
+                height: widget.convexRadius,
+                child: GestureDetector(
+                  child: _newTab(convexIndex, active),
+                  onTap: () => _onTabClick(convexIndex),
+                ),
               )),
         ),
       ],
