@@ -20,3 +20,5 @@ export 'src/bar.dart';
 export 'src/interface.dart';
 export 'src/item.dart';
 export 'src/fab.dart';
+export 'src/style/blend_image_icon.dart';
+export 'src/style/inner_builder.dart';

@@ -144,6 +144,8 @@ class ConvexAppBar extends StatefulWidget {
 
   final NotchedShape? shape;
 
+  final double? convexRadius;
+
   /// Construct a new appbar with internal style.
   ///
   /// ```dart
@@ -265,6 +267,7 @@ class ConvexAppBar extends StatefulWidget {
     this.curve = Curves.easeInOut,
     this.chipBuilder,
     this.shape,
+    this.convexRadius,
   })  : assert(top == null || top <= 0, 'top should be negative'),
         assert(initialActiveIndex == null || initialActiveIndex < count,
             'initial index should < $count'),
@@ -516,14 +519,12 @@ class ConvexAppBarState extends State<ConvexAppBar>
     var percent = isFixed()
         ? const AlwaysStoppedAnimation<double>(0.5)
         : _animation ?? _updateAnimation();
-    var factor = 1 / widget.count;
     var textDirection = Directionality.of(context);
     var dx = convexIndex! / (widget.count - 1);
     if (textDirection == TextDirection.rtl) {
       dx = 1 - dx;
     }
 
-    var offset = FractionalOffset(widget.count > 1 ? dx : 0.0, 0);
     return extend.Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.bottomCenter,
@@ -550,12 +551,15 @@ class ConvexAppBarState extends State<ConvexAppBar>
         Positioned.fill(
           top: widget.top ?? CURVE_TOP,
           bottom: additionalBottomPadding,
-          child: FractionallySizedBox(
-              widthFactor: factor,
-              alignment: offset,
-              child: GestureDetector(
-                child: _newTab(convexIndex, active),
-                onTap: () => _onTabClick(convexIndex),
+          child: Align(
+              alignment: Alignment(0, 0),
+              child: SizedBox(
+                width: widget.convexRadius,
+                height: widget.convexRadius,
+                child: GestureDetector(
+                  child: _newTab(convexIndex, active),
+                  onTap: () => _onTabClick(convexIndex),
+                ),
               )),
         ),
       ],
